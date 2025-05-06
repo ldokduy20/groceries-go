@@ -1,16 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
-	"time"
+
+	"github.com/ldokduy20/groceries-go/context"
+	"github.com/ldokduy20/groceries-go/handlers"
 )
 
-func greet(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World! %s", time.Now())
-}
-
 func main() {
-	http.HandleFunc("/", greet)
-	http.ListenAndServe(":8080", nil)
+	ctx := context.NewContext()
+	http.HandleFunc("/items/", handlers.ItemHandler(ctx))
+
+	log.Fatal(http.ListenAndServe("127.0.0.1:8080", nil))
 }
